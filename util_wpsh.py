@@ -26,7 +26,7 @@ def load_data(path, datachoose):
             data_combine["lat"].append(int(file[10:13]) / 10)
             data_combine["lon"].append(int(file[13:17]) / 10)
             data_combine["speed"].append(int(file[17:19]))
-    "输入维度为[ 时间，level，经度，维度。]"
+    "输入维度为[ 时间，level，经度，维度]"
     for root, dirs, files in os.walk(path):
         for key in datachoose:
             pool = ()
@@ -36,12 +36,4 @@ def load_data(path, datachoose):
                 npp = cv2.normalize(npp, None, 0, 255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8UC3)
                 pool = pool + (npp,)
                 data_combine[key] = np.concatenate(pool, axis=0)
-    return data_combine#shape=({10},26,81,81,3)
-
-
-def diff(input, x_l, y_l):
-    output = np.zeros(shape=(x_l - 2, y_l - 2))
-    for x in range(1, x_l - 1):
-        for y in range(1, y_l - 1):
-            output[x - 1, y - 1] = np.arctan((input[x, y + 1] - input[x, y - 1]) / (input[x + 1, y] - input[x - 1, y] + 1e-6))
-    return output
+    return data_combine

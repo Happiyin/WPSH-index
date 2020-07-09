@@ -88,7 +88,7 @@ for num in range(int(len(data_file) / 20)):  # 选择文件夹
     data_array = np.expand_dims(data_array, axis=-1)
     pool1 = pool1 + (data_array,)
     index_file = index_file + list(
-        range(k, data_file_input['z'].shape[0] -lookback + k))  # index_1 从这里选择序号
+        range(k, data_file_input['z'].shape[0] -lookback-lookforward+1 + k))  # index_1 从这里选择序号
     k = k + data_file_input['z'].shape[0]
 
 # 归一化
@@ -106,7 +106,7 @@ index_1 = index_file
 index_2 = [i + 1 for i in index_1]
 index_3 = [i + 2 for i in index_1]
 index_4 = [i + 3 for i in index_1]
-index_5 = [i + 4 for i in index_1]
+index_5 = [i + lookforward for i in index_4]
 input_data_z=np.zeros([len(index_1),4,301,273,1])
 input_data_sst=np.zeros([len(index_1),4,301,273,1])
 input_data_u=np.zeros([len(index_1),4,301,273,1])
@@ -117,6 +117,7 @@ for j in range(len(index_1)):
     input_data_z[j,0,:]=input_data[index_1[j],0,:]
     input_data_z[j,1,:]=input_data[index_2[j],0,:]
     input_data_z[j,2,:]=input_data[index_3[j],0,:]
+    
     input_data_z[j,3,:]=input_data[index_4[j],0,:]
     
     input_data_sst[j,0,:]=input_data[index_1[j],1,:]
@@ -144,7 +145,7 @@ label = np.array(
 label=label.swapaxes(0,1)
 # %%训练
 model = Network()
-history = model.fit(input, label, epochs=5,batch_size=2, validation_split=0.3)
+history = model.fit(input, label, epochs=100,batch_size=20, validation_split=0.3)
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
 plt.title('model loss')

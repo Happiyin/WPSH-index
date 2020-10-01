@@ -61,6 +61,7 @@ def Network():
     model_concat=Dropout(0.2)(model_concat)
     model_concat = Dense(32,activation='relu')(model_concat)
     model_concat = Dense(4)(model_concat)
+    ###################整合框架
     model = Model(inputs=[model1.input, model2.input, model3.input,model4.input], outputs=model_concat)
     model.compile(loss=losses.mean_squared_error, optimizer='adam',metrics=[metrics.mean_absolute_error])
     print(model.summary())

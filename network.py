@@ -47,7 +47,7 @@ def Network():
     model4.add(ConvLSTM2D(filters=1, kernel_size=(3, 3), padding='valid', return_sequences=False))
     model4.add(BatchNormalization())
     model5 = Sequential()
-    model5..add(LSTM(50, activation='relu', input_shape=(4, 4)))
+    model5..add(RNN(50, activation='relu', input_shape=(4, 4)))
     model5.add(Dense(4))
   
     #####################合并

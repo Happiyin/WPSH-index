@@ -66,8 +66,12 @@ def Network():
     model4.add(Dropout(0.2))
     model4.add(ConvLSTM2D(filters=1, kernel_size=(3, 3), padding='valid', return_sequences=False))
     model4.add(BatchNormalization())
+    model5 = Sequential()
+    model5..add(LSTM(50, activation='relu', input_shape=(4, 4)))
+    model5.add(Dense(4))
+  
     #####################合并
-    model_concat = concatenate([model1.output, model2.output, model3.output,model4.output], axis=-1)
+    model_concat = concatenate([model1.output, model2.output, model3.output,model4.output,model5.output], axis=-1)
     model_concat=Conv2D(filters=8, kernel_size=(2, 2), strides=(1, 1), activation='relu',
            kernel_initializer='glorot_uniform', padding='valid')(model_concat)
     model_concat=BatchNormalization()(model_concat)
@@ -79,7 +83,7 @@ def Network():
     model_concat=Dropout(0.2)(model_concat)
     model_concat = Dense(32,activation='relu')(model_concat)
     model_concat = Dense(4)(model_concat)
-    model = Model(inputs=[model1.input, model2.input, model3.input,model4.input], outputs=model_concat)
+    model = Model(inputs=[model1.input, model2.input, model3.input,model4.input,model5.input], outputs=model_concat)
     model.compile(loss=losses.mean_squared_error, optimizer='adam',metrics=[metrics.mean_absolute_error])
     print(model.summary())
     plot_model(model, show_shapes=True, to_file='model.png')

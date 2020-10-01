@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020/6/5 17:16
-# @Author  : Mr zhou
+# @Author  : Mr Sun
 # @FileName: model_frame.py
 # @Software: PyCharm
-# @weixin    ：dayinpromise1314
+# @weixin    ：13121288700
 #%%%%%%
 def Network():
     from keras.models import Sequential, Model
